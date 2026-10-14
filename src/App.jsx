@@ -25,10 +25,14 @@ const FIELD_TYPES = {
 const TODAY = new Date().toISOString().slice(0, 10);
 const DEFAULT_MONTH = TODAY.slice(0, 7);
 const newField = () => ({ n: "", t: "txt", u: "", min: "", max: "" });
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? "" : "https://backdiegolechona-1.onrender.com")
+).replace(/\/+$/, "");
 
 async function api(path, options = {}) {
   const token = sessionStorage.getItem("lechona_access_token");
-  const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api${path}`, {
+  const response = await fetch(`${API_BASE_URL}/api${path}`, {
     ...options,
     headers: {
       ...(options.body ? { "Content-Type": "application/json" } : {}),
